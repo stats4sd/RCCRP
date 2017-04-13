@@ -16,7 +16,7 @@
 
 
 sensitivity<-function(genotypes,environments,outcome,tolerance=.0001,cex.label=0.8,...){
-  
+  require(doBy)
   dat<-data.frame(outcome=outcome,gen=genotypes,env=environments)
   dat$gen<-as.factor(dat$gen)
   dat$env<-as.factor(dat$env)
