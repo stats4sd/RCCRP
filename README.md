@@ -162,3 +162,9 @@ superiority(genotypes = plrv$Genotype,
             environments = plrv$Locality,
             outcome = plrv$Yield)
 
+
+
+
+
+
+
