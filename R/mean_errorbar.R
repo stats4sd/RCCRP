@@ -12,9 +12,9 @@
 #' @examples
 #' library(agricolae)
 #' data(plrv)
-#' mean_errorbar(Yield~Genotype,data=plvr)
+#' mean_errorbar(Yield~Genotype,data=plrv)
 
-mean_errorbar<-function(formula,data,conf.level=0.95,length=0.1,type="confidence",las=2,mfactor=1,...){
+mean_errorbar<-function(formula,data,conf.level=0.95,length=0.1,type="confidence",las=2,mfactor=1,output=F,...){
   means<-aggregate(formula,data,mean,na.rm=T)
   if(type=="confidence"|type=="se"){
     se<-aggregate(formula,data,se,na.rm=T)}
@@ -45,4 +45,8 @@ mean_errorbar<-function(formula,data,conf.level=0.95,length=0.1,type="confidence
        ylab=ylab1,las=las,...)
   arrows(x0=1:nrow(means),y0=means[,ncol(means)]-t1*se[,ncol(se)],y1=means[,ncol(means)]+t1*se[,ncol(se)],angle=90,code=3,length=length)
   axis(1,at = 1:length(y),labels=names(y),las=las)
+  if(output==T){
+    out<-data.frame(means[,-(ncol(means))],mean=y,N=N[,(ncol(N))],se=se[,(ncol(se))],upper=means[,ncol(means)]+t1*se[,ncol(se)],lower=means[,ncol(means)]-t1*se[,ncol(se)])
+    return(out)
+  }
 }

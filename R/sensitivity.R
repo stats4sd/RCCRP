@@ -62,9 +62,9 @@ sensitivity<-function(genotypes,environments,outcome,tolerance=.0001,cex.label=0
     counter<-counter+1
     cat("Iteration",counter,": Relative change in betas",chg,"\n")
     if(chg < tolerance){ done <- TRUE
-    adjmeans<-data.frame(popMeans(m1,"gen",at=list(theta=mean(thetas)))$coef)
+    adjmeans<-data.frame(LSmeans(m1,"gen",at=list(theta=mean(thetas)))$coef)
     betas.se<-summary(m1)$coef[,2][-c(1:n.gen)]
-    env.means<-data.frame(popMeans(m2,"env")$coef)
+    env.means<-data.frame(LSmeans(m2,"env")$coef)
     }
     
   }

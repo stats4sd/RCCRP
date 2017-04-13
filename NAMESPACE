@@ -2,6 +2,7 @@
 
 export(N)
 export(biplot_from_data)
+export(collapse)
 export(compare_trt)
 export(heritability)
 export(luni)

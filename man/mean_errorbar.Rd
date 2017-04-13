@@ -5,7 +5,7 @@
 \title{Plot means with confidence intervals from raw data}
 \usage{
 mean_errorbar(formula, data, conf.level = 0.95, length = 0.1,
-  type = "confidence", las = 2, mfactor = 1, ...)
+  type = "confidence", las = 2, mfactor = 1, output = F, ...)
 }
 \arguments{
 \item{formula}{a formula of the outcome variable and the explanatory variable(s)}
@@ -26,7 +26,7 @@ Wrapper so that means with error bars can be plotted in a one-liner with same fo
 \examples{
 library(agricolae)
 data(plrv)
-mean_errorbar(Yield~Genotype,data=plvr)
+mean_errorbar(Yield~Genotype,data=plrv)
 }
 \keyword{errorbar}
 \keyword{mean}
