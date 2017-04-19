@@ -5,7 +5,7 @@
 \title{Cumulative Risk plots}
 \usage{
 riskplot(y, splitvar = NULL, approx = T, v = 0, same = T,
-  splitlab = "", ...)
+  splitlab = "", main = "", xlab = "y")
 }
 \arguments{
 \item{y}{vector containing numeric outcome values}

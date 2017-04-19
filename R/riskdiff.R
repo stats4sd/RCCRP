@@ -26,9 +26,9 @@
 #' trt1="Canchan",trt2="Unica",
 #' main="Comparison of Yield: Canchan vs Unica")
 
-riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,...){
+riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,main="",approx=F){
   #Assess Variability
-  
+  require(ggplot2)
   data<-data.frame(outcome=outcome,plotID=plotID,trtID=trtID)
   require(reshape2)
   if(is.null(grpID)){
@@ -39,9 +39,8 @@ riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,...){
     colnames(widefmt)<-c("trt1","trt2")
     widefmt<-na.omit(widefmt)
 
-    riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),...)
-    text(1,0,labels = paste(trt1,">",trt2),adj = 0,cex=0.8,font=2)
-    text(-1,0,labels = paste(trt2,">",trt1),adj = 1,cex=0.8,font=2)
+    riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),main=main,approx=approx)+
+      annotate(geom="text",x=0,y=105,label=paste(trt1," >"),hjust=1.1)+annotate(geom="text",x=0,y=105,label=paste(trt2," >"),hjust=-0.1)
   }
   else{
     data$grpID<-grpID
@@ -50,10 +49,8 @@ riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,...){
     colnames(widefmt)<-c("group","trt1","trt2")
     widefmt<-na.omit(widefmt)
     
-    riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),splitvar=widefmt$group,splitlab=deparse(substitute(grpID)),...)
-    text(1,0,labels = paste(trt1,">",trt2),adj = 0,cex=0.8,font=2)
-    text(-1,0,labels = paste(trt2,">",trt1),adj = 1,cex=0.8,font=2)
-    
+    riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),splitvar=widefmt$group,splitlab=deparse(substitute(grpID)),main=main,approx=approx)+
+      annotate(geom="text",x=0,y=105,label=paste(trt1," >"),hjust=1.1)+annotate(geom="text",x=0,y=105,label=paste(trt2," >"),hjust=-0.1)
   } 
   
 }

@@ -4,7 +4,8 @@
 \alias{riskdiff}
 \title{Cumulative Risk plots}
 \usage{
-riskdiff(outcome, plotID, trtID, grpID = NULL, trt1, trt2, ...)
+riskdiff(outcome, plotID, trtID, grpID = NULL, trt1, trt2, main = "",
+  approx = F)
 }
 \arguments{
 \item{outcome}{vector containing numeric outcome values}

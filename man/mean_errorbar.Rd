@@ -5,7 +5,8 @@
 \title{Plot means with confidence intervals from raw data}
 \usage{
 mean_errorbar(formula, data, conf.level = 0.95, length = 0.1,
-  type = "confidence", las = 2, mfactor = 1, output = F, ...)
+  type = "confidence", las = 2, mfactor = 1, output = F, cex.axis = 1,
+  ...)
 }
 \arguments{
 \item{formula}{a formula of the outcome variable and the explanatory variable(s)}

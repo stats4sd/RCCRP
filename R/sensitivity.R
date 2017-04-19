@@ -17,7 +17,12 @@
 
 sensitivity<-function(genotypes,environments,outcome,tolerance=.0001,cex.label=0.8,...){
   require(doBy)
-  dat<-data.frame(outcome=outcome,gen=genotypes,env=environments)
+  dat<-droplevels(data.frame(outcome=outcome,gen=genotypes,env=environments))
+  dat<-na.omit(dat)
+  if(nrow(subset(data.frame(table(dat$gen,dat$env)),Freq==0))>0){
+    
+    stop(paste("Genotypes",paste(unique(subset(data.frame(table(dat$gen,dat$env)),Freq==0)$Var1),collapse="; "),"not present in all environments"))
+  }
   dat$gen<-as.factor(dat$gen)
   dat$env<-as.factor(dat$env)
   n.gen <- nlevels(dat$gen)

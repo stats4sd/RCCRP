@@ -40,7 +40,7 @@ compare_trt<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,smoother=T,meanl
   if(is.null(grpID)){
     
     
-    widefmt<-dcast(data,formula(paste("plotID","~","trtID")),value.var="outcome")
+    widefmt<-dcast(data,formula(paste("plotID","~","trtID")),value.var="outcome",fun.aggregate = mean,na.rm=T)
     widefmt<-widefmt[,c(trt1,trt2)]
     colnames(widefmt)<-c("trt1","trt2")
     widefmt<-na.omit(widefmt)
@@ -53,7 +53,7 @@ compare_trt<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,smoother=T,meanl
   }
   else{
     data$grpID<-grpID
-    widefmt<-dcast(data,formula(paste("plotID","+","grpID","~","trtID")),value.var="outcome")
+    widefmt<-dcast(data,formula(paste("plotID","+","grpID","~","trtID")),value.var="outcome",fun.aggregate = mean,na.rm=T)
     widefmt<-widefmt[,c("grpID",trt1,trt2)]
     colnames(widefmt)<-c("group","trt1","trt2")
     widefmt<-na.omit(widefmt)

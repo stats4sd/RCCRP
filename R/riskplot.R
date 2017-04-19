@@ -10,52 +10,64 @@
 #' @examples
 #' See riskdiff()
 
-riskplot<-function(y,splitvar=NULL,approx=T,v=0,same=T,splitlab="",...){
-  sort1<-order(y)
-  y<-y[sort1]
+riskplot<-function(y,splitvar=NULL,approx=T,v=0,same=T,splitlab="",main="",xlab="y"){
+
+  require(ggplot2)
   if(class(splitvar)=="NULL"){
-    plot.stepfun(y,ylab="Cumulative Percentage",
-                 xlim=c(min(y,na.rm=T),max(y,na.rm=T)),col=2,lwd=2,lty=2,yaxt="n",...)
-    grid()
-    axis(2,at=seq(0,1,by=0.2),labels=seq(0,100,by=20),las=2)
-    abline(v=v)
-    plot.stepfun(y,col=2,add=T,lwd=2,...)
+    sort1<-order(y)
+    y<-na.omit(y[sort1])
+    
+    y1<-data.frame(y=y)
+    
+    y1$prop<-100*(1:nrow(y1))/nrow(y1)
     if(approx==T){
-      lines(y, pnorm(y,mean=mean(y,na.rm=T),sd=sd(y,na.rm=T)),col=2)
+      y1$approx<-100*pnorm(y1$y,mean=mean(y1$y,na.rm=T),sd=sd(y1$y,na.rm=T))
+    }
+    
+    p1<-ggplot(data=y1,aes(y=prop,x=y))+geom_step()+geom_point()+ylab("Cumulative Percentage")+geom_vline(xintercept=v)+
+      xlab(xlab)+scale_y_continuous(minor_breaks = seq(0 , 100, 5), breaks = seq(0, 100, 10),limits=c(0,105))
+    
+  
+    if(approx==T){ 
+      
+       p1<-p1+geom_line(aes(y=approx),col=2,data=y1) 
     }
   }
-  if(class(splitvar)!="NULL"&same==T){
-    splitvar<-splitvar[sort1]
+  if(class(splitvar)!="NULL"){
+    
+    sort1<-order(y)
+    y1<-data.frame(y=y,splitvar=splitvar)
+    y1<-na.omit(y1[sort1,])
+    
     levs<-levels(as.factor(as.character(splitvar)))
     n<-length(levs)
-    plot.stepfun(y[splitvar==levs[1]],ylab="Probability",
-                 xlim=c(min(y,na.rm=T),max(y,na.rm=T)),col=2,lty=2,lwd=2,...)
-    grid()
-    abline(v=v)
+    y1$prop<-NA
+    y1$approx<-NA
     for(i in 1:n){
-      yi<-y[splitvar==levs[i]]
-      plot.stepfun(yi,col=i+1,add=T,lwd=2,lty=2,...)
+      y1$prop[y1$splitvar==levels(y1$splitvar)[i]]<-100*(1:nrow(y1[y1$splitvar==levels(y1$splitvar)[i],]))/nrow(y1[y1$splitvar==levels(y1$splitvar)[i],])
+      
       if(approx==T){
-        lines(yi, pnorm(yi,mean=mean(yi,na.rm=T),sd=sd(yi,na.rm=T)),col=i+1)
+        y1$approx[y1$splitvar==levels(y1$splitvar)[i]]<-100*pnorm(y1$y[y1$splitvar==levels(y1$splitvar)[i]],
+                                                                  mean=mean(y1$y[y1$splitvar==levels(y1$splitvar)[i]],na.rm=T),
+                                                                  sd=sd(y1$y[y1$splitvar==levels(y1$splitvar)[i]],na.rm=T))
       }
+      
     }
-    legend("bottomright",lwd=2,col=2:(2+n),legend=levs,title=splitlab)
-  }
-  if(class(splitvar)!="NULL"&same==F){
-    splitvar<-splitvar[sort1]
-    levs<-levels(as.factor(as.character(splitvar)))
-    n<-length(levs)
-    for(i in 1:n){
-      yi<-y[splitvar==levs[i]]
-      plot.stepfun(yi,main=levs[i],ylab="Cumulative Percentage",
-                   xlim=c(min(y,na.rm=T),max(y,na.rm=T)),col=2,lwd=2,yaxt="n",...)
-      grid()
-      axis(2,at=seq(0,1,by=0.2),labels=seq(0,100,by=20),las=2)
-      abline(v=v)
-      plot.stepfun(yi,col=2,add=T,lwd=2,...)
+    
+    p1<-ggplot(data=y1,aes(y=prop,x=y,group=splitvar))+geom_step(aes(col=splitvar))+geom_point(aes(col=splitvar))+
+      ylab("Cumulative Percentage")+geom_vline(xintercept=v)+xlab(xlab)+
+      scale_y_continuous(minor_breaks = seq(0 , 100, 5), breaks = seq(0, 100, 10),limits=c(0,105))+
+      scale_color_discrete(name=splitlab)
+    
+    
       if(approx==T){
-        lines(yi, pnorm(yi,mean=mean(yi,na.rm=T),sd=sd(yi,na.rm=T)),col=2)
+        p1<-p1+geom_line(aes(y=approx,col=splitvar),data=y1) 
       }
+    if(same==F){
+      p1<-p1+facet_wrap(~splitvar)
     }
+    }
+   p1+ggtitle(main)
   }
-}
+ 
+
