@@ -7,9 +7,11 @@
 #' @param grpID optional ID variable for grouping factor to set colors by
 #' @param trt1 string indicating which treatment to plot on x axis
 #' @param trt2 string indicating which treatment to plot on y axis
-#' @param approx  Add in approximation line (defaults to TRUE)
+#' @param approx  Add in approximation line (defaults to FALSE)
+#' @param empirical  Add in empirical CDF line (defaults to TRUE)
 #' @param same TRUE=overlay mutliple curves FALSE= split into 1 plot per group
 #' @param splitlab string for labelling split variable
+#' @param linewidth width of lines
 #' @keywords cumulative risk
 #' @export
 #' @examples
@@ -26,7 +28,7 @@
 #' trt1="Canchan",trt2="Unica",
 #' main="Comparison of Yield: Canchan vs Unica")
 
-riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,main="",approx=F){
+riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,main="",approx=F,empirical=TRUE,linewidth=1.5,pointsize=1){
   #Assess Variability
   require(ggplot2)
   data<-data.frame(outcome=outcome,plotID=plotID,trtID=trtID)
@@ -39,8 +41,10 @@ riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,main="",approx=F){
     colnames(widefmt)<-c("trt1","trt2")
     widefmt<-na.omit(widefmt)
 
-    riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),main=main,approx=approx)+
-      annotate(geom="text",x=0,y=105,label=paste(trt1," >"),hjust=1.1)+annotate(geom="text",x=0,y=105,label=paste(trt2," >"),hjust=-0.1)
+    riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),main=main,approx=approx,
+             empirical=empirical,linewidth=linewidth,pointsize=pointsize)+
+      annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt2,sep=""),hjust=1.1,size=3)+
+      annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt1,sep=""),hjust=-0.1,size=3)
   }
   else{
     data$grpID<-grpID
@@ -49,8 +53,10 @@ riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,main="",approx=F){
     colnames(widefmt)<-c("group","trt1","trt2")
     widefmt<-na.omit(widefmt)
     
-    riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),splitvar=widefmt$group,splitlab=deparse(substitute(grpID)),main=main,approx=approx)+
-      annotate(geom="text",x=0,y=105,label=paste(trt1," >"),hjust=1.1)+annotate(geom="text",x=0,y=105,label=paste(trt2," >"),hjust=-0.1)
+    riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),empirical=empirical,
+             splitvar=widefmt$group,splitlab=deparse(substitute(grpID)),main=main,approx=approx,linewidth=linewidth,pointsize=pointsize)+
+      annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt2,sep=""),hjust=1.1,size=3)+
+      annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt1,sep=""),hjust=-0.1,size=3)
   } 
   
 }

@@ -5,12 +5,17 @@
 #' @param approx  Add in approximation line (defaults to TRUE)
 #' @param same TRUE=overlay mutliple curves FALSE= split into 1 plot per group
 #' @param splitlab string for labelling split variable
+#' @param main
+#' @param xlab
+#' @param empirical
+#' @param linewidth
+#' @param pointsize 
 #' @keywords cumulative risk
 #' @export
 #' @examples
 #' See riskdiff()
 
-riskplot<-function(y,splitvar=NULL,approx=T,v=0,same=T,splitlab="",main="",xlab="y"){
+riskplot<-function(y,splitvar=NULL,approx=T,v=0,same=T,splitlab="",main="",xlab="y",empirical=TRUE,linewidth=linewidth,pointsize=pointsize){
 
   require(ggplot2)
   if(class(splitvar)=="NULL"){
@@ -24,13 +29,15 @@ riskplot<-function(y,splitvar=NULL,approx=T,v=0,same=T,splitlab="",main="",xlab=
       y1$approx<-100*pnorm(y1$y,mean=mean(y1$y,na.rm=T),sd=sd(y1$y,na.rm=T))
     }
     
-    p1<-ggplot(data=y1,aes(y=prop,x=y))+geom_step()+geom_point()+ylab("Cumulative Percentage")+geom_vline(xintercept=v)+
+    p1<-ggplot(data=y1,aes(y=prop,x=y))+ylab("Cumulative Percentage")+geom_vline(xintercept=v)+
       xlab(xlab)+scale_y_continuous(minor_breaks = seq(0 , 100, 5), breaks = seq(0, 100, 10),limits=c(0,105))
-    
+    if(empirical==TRUE){
+      p1<-p1+geom_step(size=linewidth)+geom_point(size=pointsize)
+    }
   
     if(approx==T){ 
       
-       p1<-p1+geom_line(aes(y=approx),col=2,data=y1) 
+       p1<-p1+geom_line(aes(y=approx),col=2,data=y1,size=linewidth) 
     }
   }
   if(class(splitvar)!="NULL"){
@@ -54,14 +61,17 @@ riskplot<-function(y,splitvar=NULL,approx=T,v=0,same=T,splitlab="",main="",xlab=
       
     }
     
-    p1<-ggplot(data=y1,aes(y=prop,x=y,group=splitvar))+geom_step(aes(col=splitvar))+geom_point(aes(col=splitvar))+
+    p1<-ggplot(data=y1,aes(y=prop,x=y,group=splitvar))+
       ylab("Cumulative Percentage")+geom_vline(xintercept=v)+xlab(xlab)+
       scale_y_continuous(minor_breaks = seq(0 , 100, 5), breaks = seq(0, 100, 10),limits=c(0,105))+
       scale_color_discrete(name=splitlab)
+    if(empirical==TRUE){
+      p1<-p1+geom_step(aes(col=splitvar),size=linewidth)+geom_point(aes(col=splitvar),size=pointsize)
+    }
     
     
       if(approx==T){
-        p1<-p1+geom_line(aes(y=approx,col=splitvar),data=y1) 
+        p1<-p1+geom_line(aes(y=approx,col=splitvar),data=y1,size=linewidth) 
       }
     if(same==F){
       p1<-p1+facet_wrap(~splitvar)
