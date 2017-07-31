@@ -5,7 +5,7 @@
 \title{Cumulative Risk plots}
 \usage{
 riskdiff(outcome, plotID, trtID, grpID = NULL, trt1, trt2, main = "",
-  approx = F)
+  approx = F, empirical = TRUE, linewidth = 1.5, pointsize = 1)
 }
 \arguments{
 \item{outcome}{vector containing numeric outcome values}
@@ -20,7 +20,13 @@ riskdiff(outcome, plotID, trtID, grpID = NULL, trt1, trt2, main = "",
 
 \item{trt2}{string indicating which treatment to plot on y axis}
 
-\item{approx}{Add in approximation line (defaults to TRUE)}
+\item{approx}{Add in approximation line (defaults to FALSE)}
+
+\item{empirical}{Add in empirical CDF line (defaults to TRUE)}
+
+\item{linewidth}{width of lines}
+
+\item{pointsize}{size of point}
 
 \item{same}{TRUE=overlay mutliple curves FALSE= split into 1 plot per group}
 
@@ -30,6 +36,8 @@ riskdiff(outcome, plotID, trtID, grpID = NULL, trt1, trt2, main = "",
 Plot comparing two treatments tested in multiple identical locations from long format data
 }
 \examples{
+library(agricolae)
+date(plrv)
 riskdiff(outcome=plrv$Yield,
 plotID=paste(plrv$Locality,plrv$Rep,sep=""),
 trtID=plrv$Genotype,

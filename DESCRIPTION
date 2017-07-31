@@ -2,12 +2,11 @@ Package: RCCRP
 Title: Some Useful R Functions for OxC Analyses
 Version: 0.0.0.9000
 Authors@R: person("Sam", "Dumble", email = "s.dumble@stats4sd.org", role = c("aut", "cre"))
-Description: A number of convenience functions to produce commonly requested analyses and graphs for analysis of multi-location variety trials in relatively simple one liners of code 
+Description: A number of convenience functions to produce commonly requested analyses and graphs for analysis of multi-location variety trials in relatively simple one liners of code. 
 Depends: R (>= 3.3.1)
-License: None particularly
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1.9000
 Imports:
     doBy,
     GGEBiplotGUI,
@@ -15,6 +14,7 @@ Imports:
     lmerTest,
     multcompView,
     pbkrtest,
-    reshape2
-Suggests:
-   agricolae
+    reshape2,
+   agricolae,
+   questionr
+RoxygenNote: 6.0.1.9000

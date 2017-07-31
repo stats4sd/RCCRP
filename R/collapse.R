@@ -3,7 +3,8 @@
 #'@param x a vector to be collapse
 #' @param sep collapsing character
 #' @export
-#' @examples
+#' @examples x<-c("A","B","C")
+#' collapse(x)
 
 
 collapse<-function(x,sep="."){

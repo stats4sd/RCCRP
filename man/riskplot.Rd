@@ -5,7 +5,8 @@
 \title{Cumulative Risk plots}
 \usage{
 riskplot(y, splitvar = NULL, approx = T, v = 0, same = T,
-  splitlab = "", main = "", xlab = "y")
+  splitlab = "", main = "", xlab = "y", empirical = TRUE,
+  linewidth = 1.5, pointsize = 1)
 }
 \arguments{
 \item{y}{vector containing numeric outcome values}
@@ -14,15 +15,34 @@ riskplot(y, splitvar = NULL, approx = T, v = 0, same = T,
 
 \item{approx}{Add in approximation line (defaults to TRUE)}
 
+\item{v}{position of vertical line}
+
 \item{same}{TRUE=overlay mutliple curves FALSE= split into 1 plot per group}
 
 \item{splitlab}{string for labelling split variable}
+
+\item{main}{main title label}
+
+\item{xlab}{x axis label}
+
+\item{empirical}{TRUe/FALSE - plot empirical distribution function}
+
+\item{linewidth}{size of line}
+
+\item{pointsize}{size of points}
 }
 \description{
 Cumulative Risk plots
 }
 \examples{
-See riskdiff()
+#' library(agricolae)
+date(plrv)
+riskdiff(outcome=plrv$Yield,
+plotID=paste(plrv$Locality,plrv$Rep,sep=""),
+trtID=plrv$Genotype,
+trt1="Canchan",trt2="Unica",
+main="Comparison of Yield: Canchan vs Unica")
+#See riskdiff()
 }
 \keyword{cumulative}
 \keyword{risk}

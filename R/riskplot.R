@@ -5,17 +5,25 @@
 #' @param approx  Add in approximation line (defaults to TRUE)
 #' @param same TRUE=overlay mutliple curves FALSE= split into 1 plot per group
 #' @param splitlab string for labelling split variable
-#' @param main
-#' @param xlab
-#' @param empirical
-#' @param linewidth
-#' @param pointsize 
+#' @param main main title label
+#' @param xlab x axis label
+#' @param empirical TRUe/FALSE - plot empirical distribution function
+#' @param linewidth size of line
+#' @param pointsize size of points
+#' @param v position of vertical line
 #' @keywords cumulative risk
 #' @export
-#' @examples
-#' See riskdiff()
+#' @examples 
+#' #' library(agricolae)
+#' date(plrv)
+#' riskdiff(outcome=plrv$Yield,
+#' plotID=paste(plrv$Locality,plrv$Rep,sep=""),
+#' trtID=plrv$Genotype,
+#' trt1="Canchan",trt2="Unica",
+#' main="Comparison of Yield: Canchan vs Unica")
+#' #See riskdiff()
 
-riskplot<-function(y,splitvar=NULL,approx=T,v=0,same=T,splitlab="",main="",xlab="y",empirical=TRUE,linewidth=linewidth,pointsize=pointsize){
+riskplot<-function(y,splitvar=NULL,approx=T,v=0,same=T,splitlab="",main="",xlab="y",empirical=TRUE,linewidth=1.5,pointsize=1){
 
   require(ggplot2)
   if(class(splitvar)=="NULL"){

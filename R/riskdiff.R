@@ -12,9 +12,12 @@
 #' @param same TRUE=overlay mutliple curves FALSE= split into 1 plot per group
 #' @param splitlab string for labelling split variable
 #' @param linewidth width of lines
+#' @param pointsize size of point
 #' @keywords cumulative risk
 #' @export
 #' @examples
+#' library(agricolae)
+#' date(plrv)
 #' riskdiff(outcome=plrv$Yield,
 #' plotID=paste(plrv$Locality,plrv$Rep,sep=""),
 #' trtID=plrv$Genotype,

@@ -16,3 +16,7 @@ collapse(x, sep = ".")
 I like the collapse function in paste so much that I am going to make it it's own function
 This is probably useful to nobody apart from me
 }
+\examples{
+x<-c("A","B","C")
+collapse(x)
+}
