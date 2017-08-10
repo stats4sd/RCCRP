@@ -36,7 +36,7 @@ heritability<-function(genotypes, environments=NULL, outcome, rep){
   }
   else{
     data<-data.frame(variety=genotypes, y=outcome, rep=rep)
-    mod1<-lmer(y~(1+rep)+(1|variety),data)
+    mod1<-lmer(y~(1|rep)+(1|variety),data)
     
     
     
