@@ -4,7 +4,7 @@
 \alias{sensitivity}
 \title{Does modified joint regression analysis for variety-by-environment data (P.W. Lane & K. Ryder).}
 \usage{
-sensitivity(genotypes, environments, outcome, tolerance = 1e-04,
+sensitivity(genotypes, environments, outcome, tolerance = 0.0001,
   cex.label = 0.8, ...)
 }
 \arguments{
