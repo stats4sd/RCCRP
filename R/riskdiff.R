@@ -46,8 +46,8 @@ riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,main="",approx=F,em
 
     riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),main=main,approx=approx,
              empirical=empirical,linewidth=linewidth,pointsize=pointsize)+
-      annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt2,sep=""),hjust=1.1,size=3)+
-      annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt1,sep=""),hjust=-0.1,size=3)
+      ggplot2::annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt2,sep=""),hjust=1.1,size=3)+
+      ggplot2::annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt1,sep=""),hjust=-0.1,size=3)
   }
   else{
     data$grpID<-grpID
@@ -58,8 +58,8 @@ riskdiff<-function(outcome,plotID,trtID,grpID=NULL,trt1,trt2,main="",approx=F,em
     
     riskplot(widefmt$trt1-widefmt$trt2,xlab=paste(trt1,"-",trt2),empirical=empirical,
              splitvar=widefmt$group,splitlab=deparse(substitute(grpID)),main=main,approx=approx,linewidth=linewidth,pointsize=pointsize)+
-      annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt2,sep=""),hjust=1.1,size=3)+
-      annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt1,sep=""),hjust=-0.1,size=3)
+      ggplot2::annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt2,sep=""),hjust=1.1,size=3)+
+      ggplot2::annotate(geom="text",x=0,y=105,label=paste("Higher for\n",trt1,sep=""),hjust=-0.1,size=3)
   } 
   
 }
