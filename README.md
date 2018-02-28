@@ -5,3 +5,5 @@ A number of convenience functions to produce commonly requested analyses and gra
 Check file - RCCRP_intro.R in main folder for a quick  introduction and the following link for a walk through of that file
 
 https://stats4sd.github.io/RCCRP/
+
+The package has been integrated with OpenCPU and can be accessed via the corresponding webhook
